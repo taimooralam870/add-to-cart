@@ -1,0 +1,388 @@
+
+
+//////cart wraper code/////
+
+
+<div class="cart-background h-screen hidden bg-black opacity-75 w-full z-10 fixed top-0 left-0">
+</div>
+<div class="cart-wrapper">
+    <div
+        class="cart w-[23.8%] px-[2rem] h-screen z-50 bg-white fixed top-0 items-center right-0 translate-x-full z-10 transition duration-500">
+        <div class="flex justify-between items-center pt-2">
+            <div class="mt-2">
+                <p class="text-sm text-gray-500 added-to-cart"></p>
+                <p class="text-black text-2xl font-bold py-2 cart-count uppercase"
+                    style="font-family:futura-pt; font-size:18px;" id="totalCounter">Cart Count: </p>
+            </div>
+            <div>
+                <button class="absolute top-0 right-0 m-2 text-black cursor-pointer remove-cart py-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-20" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="w-full mt-[10px]">
+            <div class="flex items-center justify-center"><span
+                    class="font-normal text-center block text-[12px] leading-[16px] pr-[8px]">$0</span>
+                <div class="relative w-full h-[4px] bg-gray-200 rounded-full my-[5px]">
+                    <div class="absolute top-0 bottom-0 left-0 transition-all duration-300 rounded-l-full"
+                        style="width: 99%; background-color: rgb(229, 174, 156);">
+                        <div
+                            class="!hidden -right-1 -top-3 absolute border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[7px] border-t-black h-0 right-0 w-0">
+                        </div>
+                    </div>
+                    <div class="absolute top-0 bottom-0 left-0 flex items-center justify-center w-full h-full">
+                        <span class="absolute flex flex-col items-center justify-center mb-5" style="left: 0px;"><span
+                                class="block w-full mb-1 text-xs font-bold text-center !hidden">$0</span><span
+                                class="!hidden relative block w-3 h-3  text-green-500 bg-white border-black rounded-full border-[2px]"></span></span><span
+                            class="font-bold text-white"></span>
+                    </div>
+                </div><span class="absolute flex flex-col items-center justify-center" data-gift-name="free shipping"
+                    data-gift-target="75" style="left: calc(100% - 45px);"><span
+                        class="block text-[12px] leading-[16px] font-normal text-center ">$75</span><span
+                        class="!border-[#E5AE9C]  shadow-xl relative block mx-auto overflow-hidden text-green-500 bg-white border-2 border-black rounded-full"><img
+                            src="https://cdn.shopify.com/s/files/1/2569/3918/files/free-shipping-removebg-preview_bd38e921-508a-4fad-bafd-6ce3f7c9ae92.png?v=1677098182"
+                            class="w-8 h-10  min-w-[32px] "></span>
+                    <span class="block leading-[1]  mt-1 text-center text-[11px] !hidden">Free <br> <span
+                            class="whitespace-nowrap"> Shipping </span></span></span>
+            </div>
+            <div class="flex items-center justify-between mt-5 mb-0">
+                <div
+                    class="text-black tracking-[-0.1px] tracking-[0.5px] py-4 leading-[20px] text-black text-center font-futura-pt mx-auto text-[14px]">
+                    Congratulations! You've earned Free Shipping</div>
+            </div>
+        </div>
+        <div class="cart-items text-black text-center" style="max-height: 800px; overflow-y: auto;"></div>
+        <div class="w-full pb-5 bg-white bottom-0 fixed max-w-[360px]">
+            <div class="gap-4 py-2 ">
+                <div class="flex justify-between pb-2 text-[16px] font-bold text-black">
+                    <p class="uppercase font-bold" id="totalPrice">Subtotal</p>
+                    <span class="price-total" id="totalPriceValue"></span>
+                </div><a target="_self" class="block w-full" rel="noreferrer noopener" prefetch="true"
+                    href="/checkout?payment=">
+                    <button
+                        class="flex items-center justify-center w-full px-6 py-[16px] text-[16px] leading-[21px] tracking-[1.2px] text-white uppercase bg-black border border-transparent font-[futura-pt,sans-serif] font-[600] shadow-sm hover:bg-grey-900"><span>
+                            Checkout </span></button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.cards').on('click', function () {
+            console.log("hello bhaiya");
+            $('.cart-background').removeClass('hidden')
+            $('.cart').addClass('translate-x-0');
+        })
+        $('.cart-background').on('click', function () {
+            $(this).addClass('hidden');
+            $('.cart').removeClass('translate-x-0 ');
+        })
+        $('.remove-cart').on('click', function () {
+            $('.cart-background').addClass('hidden');
+            $('.cart').removeClass('translate-x-0 ');
+        })
+        $('.card-top-button').on('click', function () {
+            $('.single-product-card').toggleClass('translate-x-[82%] z-10 transition duration-500')
+        })
+        $('.remove-from-cart').on('click', function () {
+            $('.cart').removeClass('translate-x-0');
+        })
+    });
+</script>
+
+
+
+///////cart wraper code////
+
+{% assign product = all_products["new-product"] %}
+<section class="max-w-[1600px] mx-auto py-8 bg-[]">
+    {% render 'cart-wrapper' %}
+    <div class="flex items-center justify-between gap-[80px]">
+        <div class="w-[50%]">
+            <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title | escape }}">
+        </div>
+        <div class="w-[50%] flex flex-col gap-4">
+            <div class="border-b-4 pb-6 border-black">
+                <div>{{ product.title }}</div>
+                <div>{{ product.price | money }}</div>
+            </div>
+            <div class="arbs flex flex-col gap-4">
+                <p class="Kind-txt">Kind</p>
+                <div class="form gap-4 flex flex-col">
+                    <p class="line-item-property__field frst ">
+                        <input class=" border w-full py-2 px-2 rounded-md" id="first-name" type="text" name="properties[First Name]" placeholder="First Name">
+                    </p>
+                    <p class="line-item-property__field lst">
+                        <input class=" border w-full py-2 px-2 rounded-md" id="last-name" type="text" name="properties[Last Name]" placeholder="Last Name">
+                    </p>
+                    <p class="line-item-property__field notes-mar">
+                        <textarea  class=" border w-full py-2 px-2 rounded-md" id="note" name="properties[Note]" placeholder="Note"
+                            style="height: 363px;"></textarea>
+                    </p>
+                </div>
+            </div>
+                <div class="Product option">
+                    {% for option in product.options_with_values %}
+                    <fieldset class="flex flex-col gap-6">
+                        {% for value in option.values %}
+                        <div class="product-cart  single-option flex border rounded-[2rem] py-2 px-8 gap-2"
+                            data-option-position="{{ option.position }}" data-option-value="{{ value }}">
+                            <div class="md:w-[6%] pt-2">
+                                <div class="circle w-[30px] h-[30px] border border-[#88A0A7] border-2 rounded-full">
+                                </div>
+                            </div>
+                            <div class="text-[#88A0A7] w-[80%] flex items-center justify-between">
+                                <div class="slected-parent">
+                                    <button type="button"
+                                        class="option-button rounded px-2 text-[12px] 
+                                                                                                                            {% if option.selected_value == value %}selected {% endif %}"
+                                        data-name="{{ option.name | handleize }}" data-value="{{ value }}">
+                                        {{ value }}
+                                    </button>
+                                    <p>Included</p>
+                                    <p>30 serving pouch. Delivered once</p>
+                                </div>
+                                <div class="price"></div>
+                            </div>
+                        </div>
+                
+                        {% endfor %}
+                    </fieldset>
+                    {% endfor %}
+                </div>
+
+            <div class="pt-6">
+                 <div class="cards cursor-pointer uppercase text-white font-bold bg-[#07EB84] rounded-2xl text-center px-28 py-4"
+                     id="collection-cart-{{product.id}}">add
+                        to cart</div>
+             </div>
+
+        </div>
+        
+    </div>
+    
+</section>
+{% schema %}
+{
+"name": "t-product",
+"settings": [],
+"presets": [
+{
+"name": "t-product"
+}
+]
+}
+{% endschema %}
+<script>
+    var matchedVariant = 0;
+    const selectedOptions = {};
+    var variants = [];
+
+    {% for variant in product.variants %}
+    var variantOptions = [];
+    {% for option in variant.options %}
+    variantOptions.push("{{ option }}");
+    {% endfor %}
+    variants.push({
+        id: {{ variant.id }},
+        price: {{ variant.price }},
+        options: variantOptions
+    });
+    {% endfor %}
+
+    console.log('All Variants:', variants);
+
+    function matchFound(variants, selectedOptions) {
+        matchedVariant = variants.find(variant => {
+            for (var i = 0; i < selectedOptions.length; i++) {
+                if (variant.options[i] !== selectedOptions[i]) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        if (matchedVariant) {
+            console.log('Matched Variant:', matchedVariant);
+        } else {
+            console.log('No Match Found');
+            $('.variant-style').html(`<p>No matches</p>`);
+        }
+    }
+
+    $(document).ready(function () {
+        $(".single-option").each(function (index) {
+            let position = $(this).data('option-position');
+            let value = $(this).data('option-value');
+            let variant = variants.find(function (variant) {
+                return variant[`option${position}`] == value;
+            });
+            if (variant) {
+                let price = variant.price;
+                let $priceElement = $(this).find('.price');
+                $priceElement.text(`$ ${price / 100}`);
+            } else {
+                console.log('No variant found for', value);
+            }
+        });
+
+       
+        async function renderCart() {
+            const res = await fetch("/cart.js");
+            const cartData = await res.json();
+            console.log("cart-data", cartData);
+            let cartItems = cartData.items;
+            $('.cart-items').html('');
+            for (let item of cartItems) {
+                console.log({ item });
+                $('.cart-items').append(`
+                    <div class="flex border-t max-w-[600px] py-4 gap-2">
+                        <div class="w-[28%]">
+                            <img class="" style="max-height:90px;" src="${item.image}" />
+                        </div>
+                        <div class="flex flex-col w-[72%] justify-between">
+                            <div class="flex justify-between">
+                                <div class="text-left">
+                                    <span class="font-semibold text-left" style="font-size:14px;">${item.title}</span>
+                               <span class="text-gray-400 text-[12px]">${item.properties["FirstName"]}</span>
+                                    <span class="text-gray-400 text-[12px]">${item.properties.LastName}</span>
+                                    <span class="text-gray-400 text-[12px]">${item.properties["Note"]}</span>
+                                     
+                                </div>
+                                <div>
+                                    <button class="remove-from-cart cursor-pointer text-black shadow-md" data-variant-id="${item.key}">
+                                        <p class="text-[12px]">Remove</p>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="mt-2 flex h-[30px] w-[80px] cursor-pointer items-center justify-center rounded-lg border border-gray-300">
+                                    <span class="decrease-value text-gray-400" data-variant-id="${item.variant_id}" data-quantity="${item.quantity}">-</span>
+                                    <span class="counter-display mx-2 flex h-6 w-6 items-center justify-center text-center">${item.quantity}</span>
+                                    <span class="increase-value text-gray-400" data-variant-id="${item.variant_id}" data-quantity="${item.quantity}">+</span>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-black ">$${item.price / 100}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                `);
+            }
+            const cartCountElements = document.querySelectorAll(".cart-count");
+            const cartPriceElements = document.querySelectorAll(".price-total");
+            cartCountElements.forEach((el) => {
+                el.textContent = `Cart (${cartData.item_count})`;
+            });
+            cartPriceElements.forEach((el) => {
+                el.textContent = `$${cartData.items_subtotal_price / 100}`;
+            });
+        }
+
+        $('.cards').on('click', function (e) {
+            e.preventDefault();
+            const productId = matchedVariant.id;
+            addToCart(productId);
+        });
+
+
+         $('.cards').on('click', function (e) {
+            e.preventDefault();
+            const productId = matchedVariant.id;
+            const formData = {
+                "FirstName": $('#first-name').val(),
+                "LastName": $('#last-name').val(),
+                "Note": $('#note').val()
+            };
+            addToCart(productId, formData);
+        });
+
+
+          async function addToCart(productId, formData) {
+            const response = await fetch("/cart/add.js", {
+                method: "post",
+                body: JSON.stringify({
+                    quantity: 1,
+                    id: productId,
+                    properties: formData
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            renderCart();
+        }
+        async function removeCart(variantId, changeQuantity) {
+            const response = await fetch("/cart/change.js", {
+                method: "post",
+                body: `quantity=${changeQuantity}&id=${variantId}`,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            });
+            renderCart();
+        }
+        async function updateCartQuantity(variantId, changeQuantity) {
+            const response = await fetch("/cart/change.js", {
+                method: "post",
+                body: `quantity=${changeQuantity}&id=${variantId}`,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            });
+            renderCart();
+        }
+
+        $(document).on('click', '.remove-from-cart', function () {
+            console.log("you click on remove button");
+            const variantId = $(this).data('variant-id');
+            removeCart(variantId, 0);
+            console.log(variantId);
+        });
+
+        $(document).on('click', '.increase-value', function () {
+            const variantId = $(this).data('variant-id');
+            const quantity = $(this).data('quantity');
+            const newQuantity = parseInt(quantity) + 1;
+            $(this).parent().find('.counter-display').html(newQuantity);
+            updateCartQuantity(variantId, newQuantity);
+        });
+
+        $(document).on('click', '.decrease-value', function () {
+            const variantId = $(this).data('variant-id');
+            const quantity = $(this).data('quantity');
+            const newQuantity = parseInt(quantity) - 1;
+            if (newQuantity >= 0) {
+                $(this).parent().find('.counter-display').html(newQuantity);
+                updateCartQuantity(variantId, newQuantity);
+            }
+        });
+
+        $(document).on('click', '.product-cart', function () {
+            const parentDiv = $(this);
+            const fieldset = parentDiv.closest('fieldset');
+            fieldset.find('.option-button, .product-cart, .circle, .slected-parent, .price')
+                .removeClass('selected border-2 bg-black text-white');
+            parentDiv.find('.option-button').addClass('selected');
+            parentDiv.addClass('border border-2 text-black');
+            parentDiv.find('.circle').addClass('bg-black');
+            parentDiv.find('.slected-parent, .price').addClass('text-black');
+        });
+
+        $(document).on('click', '.Product', function () {
+            $(this).find('.option-button.selected').each(function () {
+                const optionName = $(this).data('name');
+                const selectedValue = $(this).data('value');
+                if (optionName && selectedValue) {
+                    selectedOptions[optionName] = selectedValue;
+                }
+            });
+            console.log('Selected Options:', selectedOptions);
+            matchFound(variants, Object.values(selectedOptions));
+        });
+    });
+</script>
